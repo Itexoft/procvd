@@ -1,0 +1,11 @@
+*/*/bin
+*/*/obj
+/build/
+/nuget/
+/doc/
+*.DS_Store
+.idea/
+*.user
+Agents.md
+.notes/
+**/.build/
