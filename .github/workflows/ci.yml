@@ -1,0 +1,69 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+    outputs:
+      run-id:
+        description: ci run id
+        value: ${{ github.run_id }}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Prepare tools
+        run: chmod +x publish.sh run-tests.sh
+
+      - name: Run tests
+        run: ./run-tests.sh
+
+      - name: Publish binaries
+        run: ./publish.sh
+
+      - name: Locate binaries
+        id: bins
+        run: |
+          set -euo pipefail
+          files=()
+          while IFS= read -r f; do files+=("$f"); done < <(find "$GITHUB_WORKSPACE/build/release" -type f -print | sort)
+          if [ "${#files[@]}" -eq 0 ]; then echo "::error::No release binaries found"; exit 1; fi
+          {
+            echo "paths<<EOF"
+            printf "%s\n" "${files[@]}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: procvd-binaries
+          path: ${{ steps.bins.outputs.paths }}
+          if-no-files-found: error
+          retention-days: 1

@@ -1,0 +1,27 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Procvd", "Procvd\\Procvd.csproj", "{71B739A8-0425-479D-80E6-870CACCC05F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Procvd.Tests", "Procvd.Tests\\Procvd.Tests.csproj", "{E58D0A65-7A9C-4DBB-8136-68E10A0C010E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itexoft", "..\\..\\default\\src\\Itexoft\\Itexoft.csproj", "{CD229F30-7061-4E6E-82B6-50D2908DDFEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71B739A8-0425-479D-80E6-870CACCC05F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71B739A8-0425-479D-80E6-870CACCC05F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71B739A8-0425-479D-80E6-870CACCC05F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71B739A8-0425-479D-80E6-870CACCC05F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E58D0A65-7A9C-4DBB-8136-68E10A0C010E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E58D0A65-7A9C-4DBB-8136-68E10A0C010E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E58D0A65-7A9C-4DBB-8136-68E10A0C010E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E58D0A65-7A9C-4DBB-8136-68E10A0C010E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD229F30-7061-4E6E-82B6-50D2908DDFEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD229F30-7061-4E6E-82B6-50D2908DDFEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD229F30-7061-4E6E-82B6-50D2908DDFEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD229F30-7061-4E6E-82B6-50D2908DDFEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

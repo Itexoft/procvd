@@ -1,0 +1,50 @@
+<Project>
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <EnableDefaultItems>true</EnableDefaultItems>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>latest</LangVersion>
+        <PackageLicenseExpression>MPL-2.0-no-copyleft-exception</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/Itexoft/procvd</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageProjectUrl>https://github.com/Itexoft/procvd</PackageProjectUrl>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RepositoryType>git</RepositoryType>
+        <Authors>Denis Kudelin</Authors>
+        <Company>Itexoft</Company>
+        <Copyright>$(Authors)</Copyright>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(UsingMicrosoftNETSdkBlazorWebAssembly)' != 'true'">
+        <PublishDir>$([System.IO.Path]::Combine('$(MSBuildProjectDirectory)', 'bin', '$(MSBuildProjectName)-$(_Rid)-$(TargetFramework)-$(Configuration)-publish'))$([System.IO.Path]::DirectorySeparatorChar)</PublishDir>
+        <OutDir>$([System.IO.Path]::Combine('$(MSBuildProjectDirectory)', 'bin', '$(MSBuildProjectName)-$(_Rid)-$(TargetFramework)-$(Configuration)'))$([System.IO.Path]::DirectorySeparatorChar)</OutDir>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <Optimize>true</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release' and $(_IsPublishing) == 'true'">
+        <DebugType>none</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+        <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+        <IncludeSymbols>false</IncludeSymbols>
+        <TrimMode>full</TrimMode>
+        <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+        <IlcGenerateCompleteTypeMetadata>false</IlcGenerateCompleteTypeMetadata>
+        <OptimizationPreference Condition="'$(RuntimeIdentifier)' != 'browser-wasm'">Speed</OptimizationPreference>
+        <IlcOptimizationPreference Condition="'$(RuntimeIdentifier)' != 'browser-wasm'">Speed</IlcOptimizationPreference>
+        <OptimizationPreference Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">Size</OptimizationPreference>
+        <IlcOptimizationPreference Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">Size</IlcOptimizationPreference>
+        <StripSymbols>true</StripSymbols>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+    </PropertyGroup>
+</Project>

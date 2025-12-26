@@ -1,0 +1,48 @@
+<Project>
+    <PropertyGroup>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningLevel>10</WarningLevel>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <GenerateDependencyFile>false</GenerateDependencyFile>
+        <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <VersionFile>$(MSBuildThisFileDirectory)../VERSION</VersionFile>
+        <VersionFromFile Condition="Exists('$(VersionFile)')">$([System.IO.File]::ReadAllText('$(VersionFile)').Trim())</VersionFromFile>
+        <Version Condition="'$(VersionFromFile)' != ''">$(VersionFromFile)</Version>
+        <PackageVersion Condition="'$(VersionFromFile)' != ''">$(VersionFromFile)</PackageVersion>
+        <AssemblyVersion Condition="'$(VersionFromFile)' != ''">$(VersionFromFile)</AssemblyVersion>
+        <FileVersion Condition="'$(VersionFromFile)' != ''">$(VersionFromFile)</FileVersion>
+
+        <_RidPlatform Condition="'$(_Rid)' == '' and '$(_RidPlatform)' == '' and $([System.OperatingSystem]::IsWindows())">win</_RidPlatform>
+        <_RidPlatform Condition="'$(_Rid)' == '' and '$(_RidPlatform)' == '' and $([System.OperatingSystem]::IsMacOS())">osx</_RidPlatform>
+        <_RidPlatform Condition="'$(_Rid)' == '' and '$(_RidPlatform)' == '' and $([System.OperatingSystem]::IsLinux())">linux</_RidPlatform>
+        <_RidPlatform Condition="'$(_Rid)' == '' and '$(_RidPlatform)' == ''">neutral</_RidPlatform>
+
+        <_RidArch Condition="'$(_Rid)' == '' and '$(_RidArch)' == ''">$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture.ToString().ToLowerInvariant())</_RidArch>
+        <_Rid Condition="'$(_Rid)' == ''">$(_RidPlatform)-$(_RidArch)</_Rid>
+        <_Rid Condition="'$(RuntimeIdentifier)' != ''">$(RuntimeIdentifier)</_Rid>
+        <_Rid Condition="'$(_Rid)' == ''">$(NETCoreSdkRuntimeIdentifier)</_Rid>
+
+        <DefaultItemExcludes>$(DefaultItemExcludes);bin/**;obj/**</DefaultItemExcludes>
+        <DefaultItemExcludesInProjectFolder>$(DefaultItemExcludesInProjectFolder);bin/**;obj/**</DefaultItemExcludesInProjectFolder>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(UsingMicrosoftNETSdkBlazorWebAssembly)' != 'true'">
+        <_ObjRoot>$([System.IO.Path]::Combine('$(MSBuildProjectDirectory)', 'obj', '$(MSBuildProjectName)-$(_Rid)'))$([System.IO.Path]::DirectorySeparatorChar)</_ObjRoot>
+        <PublishRelease>true</PublishRelease>
+        <MSBuildProjectExtensionsPath>$(_ObjRoot)</MSBuildProjectExtensionsPath>
+        <BaseIntermediateOutputPath>$(MSBuildProjectExtensionsPath)</BaseIntermediateOutputPath>
+        <RestoreOutputPath>$(MSBuildProjectExtensionsPath)</RestoreOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(UsingMicrosoftNETSdkBlazorWebAssembly)' == 'true'">
+        <_TmpObjRoot>/tmp/msbuild/$(MSBuildProjectName)/</_TmpObjRoot>
+        <MSBuildProjectExtensionsPath>$(_TmpObjRoot)</MSBuildProjectExtensionsPath>
+        <BaseIntermediateOutputPath>$(_TmpObjRoot)</BaseIntermediateOutputPath>
+        <RestoreOutputPath>$(_TmpObjRoot)</RestoreOutputPath>
+    </PropertyGroup>
+</Project>

@@ -1,0 +1,28 @@
+name: Publish
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: publish-${{ github.repository }}-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  release:
+    needs: ci
+    uses: Itexoft/devops/.github/workflows/publish-release.yml@master
+    with:
+      branch: main
+      run-id: ${{ needs.ci.outputs.run-id }}
+      artifact-name: procvd-binaries
+      tag-prefix: v
+      generate-notes: false
+      allow-version-mismatch: false
+    secrets: inherit
